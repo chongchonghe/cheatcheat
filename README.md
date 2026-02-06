@@ -63,12 +63,6 @@ To list all available cheatsheets:
 cheat -l
 ```
 
-To list all cheatsheets that are tagged with "networking":
-
-```sh
-cheat -l -t networking
-```
-
 To list all cheatsheets on the "personal" path:
 
 ```sh
@@ -79,12 +73,6 @@ To search for the phrase "ssh" among cheatsheets:
 
 ```sh
 cheat -s ssh
-```
-
-To search (by regex) for cheatsheets that contain an IP address:
-
-```sh
-cheat -r -s '(?:[0-9]{1,3}\.){3}[0-9]{1,3}'
 ```
 
 Cheatsheets
