@@ -244,6 +244,34 @@ def view_cheatsheet(cheatname, paths, config):
         with open(full_path, 'r') as f:
             print(f.read())
 
+def open_cheatsheet(cheatname, paths, config):
+    """Opens a cheatsheet in the default app (if extension) or editor."""
+    path_entry, full_path = find_cheatsheet(cheatname, paths)
+    
+    if not path_entry:
+        print(f"No cheatsheet found for '{cheatname}'.")
+        sys.exit(1)
+        
+    _, ext = os.path.splitext(full_path)
+    if ext:
+        # It has an extension, try to open with system opener
+        try:
+            if sys.platform == 'darwin':
+                subprocess.call(['open', full_path])
+            elif sys.platform.startswith('linux'):
+                subprocess.call(['xdg-open', full_path])
+            elif sys.platform == 'win32':
+                os.startfile(full_path)
+            else:
+                print(f"Unsupported platform: {sys.platform}")
+        except Exception as e:
+            print(f"Error opening file: {e}")
+    else:
+        # No extension, use editor
+        editor = config.get('editor', os.environ.get('EDITOR', 'vi'))
+        subprocess.call(f"{editor} '{full_path}'", shell=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Create and view interactive cheatsheets.")
     parser.add_argument("cheatname", nargs="?", help="The name of the cheatsheet to view/edit.")
@@ -251,6 +279,7 @@ def main():
     parser.add_argument("-l", "--list", action="store_true", help="List all available cheatsheets.")
     parser.add_argument("-p", "--path", help="Filter by cheatpath name (used with -l).")
     parser.add_argument("-s", "--search", help="Search for a term among cheatsheets.")
+    parser.add_argument("-o", "--open", action="store_true", help="Open cheatsheet in default app.")
     parser.add_argument("-d", "--directories", action="store_true", help="List configured cheatpaths.")
     parser.add_argument("--conf", default=os.path.expanduser("~/.config/cheat/conf.yml"), help="Path to config file.")
     
@@ -290,6 +319,13 @@ def main():
             print("Error: Please specify a cheatsheet to edit.")
             sys.exit(1)
         edit_cheatsheet(args.cheatname, paths, config)
+        return
+
+    if args.open:
+        if not args.cheatname:
+            print("Error: Please specify a cheatsheet to open.")
+            sys.exit(1)
+        open_cheatsheet(args.cheatname, paths, config)
         return
 
     if args.cheatname:
