@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cheatcheat"
+version = "0.1.0"
+description = "Create and view interactive cheatsheets on the command-line"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+  {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["cheat", "cheatsheet", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+  "PyYAML",
+]
+
+[project.scripts]
+cheat = "cheatcheat.main:main"
+
+[project.urls]
+"Homepage" = "https://github.com/example/cheatcheat"
+"Bug Tracker" = "https://github.com/example/cheatcheat/issues"
