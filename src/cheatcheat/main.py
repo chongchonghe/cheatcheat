@@ -171,23 +171,12 @@ def edit_cheatsheet(cheatname, paths, config):
             # Read-only, need to copy to first writable path
             print(f"Path '{path_entry['name']}' is read-only. Copying to personal path...")
             
-            # Find first writable path (checking from end or start? "first writeable directory in 'cheatpaths'")
-            # "cheat will transparently copy that sheet to the first writeable directory in 'cheatpaths'"
-            # Assuming 'first' means the first one listed in config (Global?) Or the most local one?
-            # "Most global ... listed first ... most local listed last"
-            # If I want to override a global one, I should write to a local one.
-            # Usually users want to write to their 'personal' path which is usually defined later or is just writable.
-            # Let's find the *last* writable path (most local) to ensure it overrides? 
-            # Or the *first* writable path found in the list?
-            # The README says "first writeable directory". Let's assume list order.
-            
+            # Find last writable path (most local)
             target_entry = None
-            for entry in paths: # Iterate in priority order (Global -> Local)
+            for entry in reversed(paths): # Iterate in reverse priority order (Local -> Global)
                 if not entry.get('readonly', False):
                     target_entry = entry
-                    break # Use the first one we find? Or looking for a specific one?
-                    # If I have global (RO), work (RW), personal (RW). copy to work or personal?
-                    # "First writeable" in list order suggests 'work' in that example.
+                    break
             
             if not target_entry:
                 print("Error: No writable cheatpath found.")
@@ -215,9 +204,9 @@ def edit_cheatsheet(cheatname, paths, config):
             
     else:
         # Does not exist. Create new.
-        # Find first writable path
+        # Find last writable path (most local)
         target_entry = None
-        for entry in paths:
+        for entry in reversed(paths):
              if not entry.get('readonly', False):
                 target_entry = entry
                 break
