@@ -75,6 +75,12 @@ To search for the phrase "ssh" among cheatsheets:
 cheat -s ssh
 ```
 
+To open a cheatsheet in the default system application:
+
+```sh
+cheat -o foo
+```
+
 Cheatsheets
 -----------
 Cheatsheets are plain-text files with optional file extensions. When the extension is excluded, they are named
