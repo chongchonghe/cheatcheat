@@ -1,6 +1,6 @@
 ---
 # The editor to use with 'cheat -e <sheet>'. Defaults to $EDITOR or $VISUAL.
-editor: nvim
+#editor: vim
 
 # Which viewer should be used?
 # 'bat' is the best modern option
@@ -46,14 +46,6 @@ cheatpaths:
   - name: community
     path: ~/git/cheatsheets
     readonly: true
-
-  - name: tools
-    path: ~/git/awesome-cheatsheets/tools
-    readonly: true
-
-  - name: private
-    path: ~/Dropbox/cheat
-    readonly: false
 
   # If you have personalized cheatsheets, list them last. They will take
   # precedence over the more global cheatsheets.
